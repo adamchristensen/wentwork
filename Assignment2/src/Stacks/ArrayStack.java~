@@ -1,0 +1,96 @@
+
+/***************************************************************************
+  * Array Stack
+  **************************************************************************/
+
+public class ArrayStack<E> implements Stack<E> {
+
+  protected int capacity;                      // The actual capacity of the stack array
+  public static final int CAPACITY = 1000;     // default array capacity
+  protected E S[];                             // Generic array used to implement the stack 
+  protected int top = -1;                      // index for the top of the stack
+  
+  // **************************************
+  // Constructors 
+  // **************************************
+  public ArrayStack() {
+    this(CAPACITY);                            // default capacity 
+  }
+  
+  public ArrayStack(int cap) {
+    capacity = cap;
+    S = (E[]) new Object[capacity]; // compiler may give warning, but this is ok
+  }
+  
+  // **************************************
+  // SIZE 
+  // **************************************
+  public int size() { 
+    return (top + 1);
+  }
+  
+  // **************************************
+  // isEmpty
+  // **************************************
+  public boolean isEmpty() {
+    return (top < 0);
+  }
+  
+  // *******************************************
+  // PUSH - Put something on top of the stack
+  // *******************************************
+  public void push(E element)  {
+    if (size() != capacity)
+       S[++top] = element;
+  }
+  
+  // *******************************************
+  // TOP - REturn top element but dont remove
+  // *******************************************
+  public E top()  {
+    if (isEmpty()) return null;
+    return S[top];
+    }
+  
+  // *******************************************
+  // POP -  remove and return top element
+  // *******************************************
+  public E pop()  {
+    E element;
+    if (isEmpty()) return null; 
+    element = S[top];
+    S[top--] = null; // dereference S[top] for garbage collection.
+    return element;
+  }
+  
+  // *******************************************
+  // toString - Display stack
+  // *******************************************
+  public String toString() {
+    String s;
+    s = "[";
+    if (size() > 0) s+= S[0];
+    if (size() > 1)
+      for (int i = 1; i <= size()-1; i++) {
+      s += ", " + S[i];
+      }
+    return s + "]";
+  }
+
+  
+  // *******************************************
+  //  Main - Test array stack 
+  // *******************************************
+  
+  public static void main(String args[]) {
+    
+    ArrayStack<Integer>  teststack = new ArrayStack<Integer>();
+    teststack.push(8);
+    teststack.push(9);
+    System.out.println(teststack);
+    System.out.println(teststack.pop());
+    System.out.println(teststack.pop());
+    System.out.println(teststack);
+  }
+    
+}
